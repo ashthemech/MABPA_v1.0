@@ -20,8 +20,10 @@
  /*******************************************************************************
   * PRIVATE TYPEDEFS                                                            *
   ******************************************************************************/
-    int ledPin = 13;
-
+    #ifdef SLOW_BLINK_TEST
+        int ledPin = 13;
+    #endif
+    
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -51,7 +53,10 @@
   * @author Ashton Coons
   * @modified AshtonCoons, 2025.2.19 3:54pm */
  void slowBlinkTest(void){
-
+    digitalWrite(ledPin, HIGH);
+    delay(1000);
+    digitalWrite(ledPin, LOW);
+    delay(1000);
  }
  
   /*******************************************************************************
@@ -59,13 +64,14 @@
    ******************************************************************************/
   #ifdef PERIPHERAL_TEST
     void setup(){
-        pinMode(ledPin, OUTPUT);
+        #ifdef SLOW_BLINK_TEST
+            pinMode(ledPin, OUTPUT);
+        #endif
     }
 
     void loop() {
-        digitalWrite(ledPin, HIGH);
-        delay(1000);
-        digitalWrite(ledPin, LOW);
-        delay(1000);
-     }
+        #ifdef SLOW_BLINK_TEST
+            slowBlinkTest();
+        #endif
+    }
   #endif
