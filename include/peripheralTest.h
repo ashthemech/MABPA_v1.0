@@ -1,4 +1,5 @@
 /* 
+
  * File:   peripheralTest.h
  * Author: Ashton Coons
  * Brief: Header for test harness for the required MABPA project peripherals on the Teensy 4.1
@@ -16,7 +17,9 @@
  /*******************************************************************************
   * PUBLIC #DEFINES                                                             *
   ******************************************************************************/
-    #define SLOW_BLINK_TEST
+    //#define SLOW_BLINK_TEST
+    //#define ANALOG_READ_TEST
+    #define EMG_READ_TEST
 
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *

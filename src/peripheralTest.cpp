@@ -23,19 +23,19 @@
     #ifdef SLOW_BLINK_TEST
         int ledPin = 13;
     #endif
-    
+
+    #ifdef ANALOG_READ_TEST
+        int analogPin = A0;
+        int val = 0;
+    #endif
+
+    #ifdef EMG_READ_TEST
+        int analogPinSensor = A0;
+        int sensorVal = 0;
+    #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
-  /**
-  * @Function slowBlinkTest(void)
-  * @param none
-  * @return none
-  * @brief Test function for slow blinking LED on Teensy 4.1
-  * @note
-  * @author Ashton Coons
-  * @modified AshtonCoons, 2025.2.19 3:54pm */
- void slowBlinkTest(void);
 
  /*******************************************************************************
   * PUBLIC FUNCTION IMPLEMENTATIONS                                             *
@@ -44,20 +44,6 @@
  /*******************************************************************************
   * PRIVATE FUNCTION IMPLEMENTATIONS                                            *
   ******************************************************************************/
- /**
-  * @Function slowBlinkTest(void)
-  * @param none
-  * @return none
-  * @brief Test function for slow blinking LED on Teensy 4.1
-  * @note
-  * @author Ashton Coons
-  * @modified AshtonCoons, 2025.2.19 3:54pm */
- void slowBlinkTest(void){
-    digitalWrite(ledPin, HIGH);
-    delay(1000);
-    digitalWrite(ledPin, LOW);
-    delay(1000);
- }
  
   /*******************************************************************************
    * MAIN                                                                        *
@@ -67,11 +53,38 @@
         #ifdef SLOW_BLINK_TEST
             pinMode(ledPin, OUTPUT);
         #endif
+
+        #ifdef ANALOG_READ_TEST
+            pinMode(analogPin, INPUT);
+            analogReadResolution(10);
+            Serial.begin(38400);
+        #endif
+
+        #ifdef EMG_READ_TEST
+            pinMode(analogPinSensor, INPUT);
+            analogReadResolution(10);
+            Serial.begin(115200);
+        #endif
     }
 
     void loop() {
         #ifdef SLOW_BLINK_TEST
-            slowBlinkTest();
+            digitalWrite(ledPin, HIGH);
+            delay(1000);
+            digitalWrite(ledPin, LOW);
+            delay(1000);
+        #endif
+
+        #ifdef ANALOG_READ_TEST
+            val = analogRead(analogPin);
+            Serial.println(val);
+            delay(250);
+        #endif
+
+        #ifdef EMG_READ_TEST
+            sensorVal = analogRead(analogPinSensor);
+            Serial.println(sensorVal);
+            delay(1000); //delay 1 second so we can see flex and no flex values
         #endif
     }
   #endif
