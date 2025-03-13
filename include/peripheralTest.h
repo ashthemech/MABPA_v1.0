@@ -19,7 +19,8 @@
   ******************************************************************************/
     //#define SLOW_BLINK_TEST
     //#define ANALOG_READ_TEST
-    #define EMG_READ_TEST
+    //#define EMG_READ_TEST
+    #define EMG_GRAPH_TEST
 
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *

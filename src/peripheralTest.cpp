@@ -33,6 +33,11 @@
         int analogPinSensor = A0;
         int sensorVal = 0;
     #endif
+
+    #ifdef EMG_GRAPH_TEST
+        int analogPinSensor = A0;
+        int sensorVal = 0;
+    #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -65,6 +70,12 @@
             analogReadResolution(10);
             Serial.begin(115200);
         #endif
+
+        #ifdef EMG_GRAPH_TEST
+            pinMode(analogPinSensor, INPUT);
+            analogReadResolution(10);
+            Serial.begin(115200);
+        #endif
     }
 
     void loop() {
@@ -85,6 +96,15 @@
             sensorVal = analogRead(analogPinSensor);
             Serial.println(sensorVal);
             delay(1000); //delay 1 second so we can see flex and no flex values
+        #endif
+
+        #ifdef EMG_GRAPH_TEST
+            sensorVal = analogRead(analogPinSensor);
+            Serial.print(">");
+            Serial.print("sEMG1:");
+            Serial.print(sensorVal);
+            Serial.println();
+            delay(100);
         #endif
     }
   #endif
