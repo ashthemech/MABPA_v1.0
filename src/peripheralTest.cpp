@@ -38,6 +38,12 @@
         int analogPinSensor = A0;
         int sensorVal = 0;
     #endif
+
+    #ifdef EMG_EXTRACT_DATA
+        int analogPinSensor = A0;
+        int sensorVal = 0;
+        unsigned long currentTime = 0;
+    #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -76,6 +82,13 @@
             analogReadResolution(10);
             Serial.begin(115200);
         #endif
+
+        #ifdef EMG_EXTRACT_DATA
+            pinMode(analogPinSensor, INPUT);
+            analogReadResolution(10);
+            Serial.begin(115200);
+            currentTime = 0;
+        #endif
     }
 
     void loop() {
@@ -102,6 +115,16 @@
             sensorVal = analogRead(analogPinSensor);
             Serial.print(">");
             Serial.print("sEMG1:");
+            Serial.print(sensorVal);
+            Serial.println();
+            delay(100);
+        #endif
+
+        #ifdef EMG_EXTRACT_DATA
+            currentTime = millis();
+            sensorVal = analogRead(analogPinSensor);
+            Serial.print(currentTime);
+            Serial.print(",");
             Serial.print(sensorVal);
             Serial.println();
             delay(100);
