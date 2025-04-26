@@ -9,7 +9,8 @@
 /*******************************************************************************
  * #INCLUDES                                                                   *
  ******************************************************************************/
-    #include <Arduino.h>   
+    #include <Arduino.h>
+    #include <Servo.h>   
     #include "peripheralTest.h" 
 
  /*******************************************************************************
@@ -34,15 +35,25 @@
         int sensorVal = 0;
     #endif
 
+    #ifdef SERVO_TEST
+        Servo brakeServo;
+        int servoPin = 4;
+        int servoPos = 0;
+    #endif
+
     #ifdef EMG_GRAPH_TEST
         int analogPinSensor = A0;
         int sensorVal = 0;
+        float divisor = 310.303; //get V from the ADC value
+        float voltage = 0.00;
     #endif
 
     #ifdef EMG_EXTRACT_DATA
         int analogPinSensor = A0;
         int sensorVal = 0;
         unsigned long currentTime = 0;
+        unsigned long previousTime = 0;
+        const long interval = 1; //1ms interval (1000Hz)
     #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
@@ -75,6 +86,13 @@
             pinMode(analogPinSensor, INPUT);
             analogReadResolution(10);
             Serial.begin(115200);
+        #endif
+
+        #ifdef SERVO_TEST
+            pinMode(servoPin, OUTPUT);
+            brakeServo.attach(servoPin);
+            brakeServo.write(0); //set servo to 0 degrees
+            delay(1000); //wait for servo to move
         #endif
 
         #ifdef EMG_GRAPH_TEST
@@ -111,23 +129,40 @@
             delay(1000); //delay 1 second so we can see flex and no flex values
         #endif
 
+        #ifdef SERVO_TEST
+            for(servoPos = 10; servoPos < 170; servoPos += 1){
+                brakeServo.write(servoPos);              
+                delay(15);                       
+            } 
+            for(servoPos = 180; servoPos>=1; servoPos-=1){                                
+                brakeServo.write(servoPos);              
+                delay(15);                       
+            }
+        #endif
+
         #ifdef EMG_GRAPH_TEST
             sensorVal = analogRead(analogPinSensor);
+            voltage = (float)sensorVal / divisor;
             Serial.print(">");
             Serial.print("sEMG1:");
-            Serial.print(sensorVal);
+            Serial.print(voltage, 2);
             Serial.println();
             delay(100);
         #endif
 
         #ifdef EMG_EXTRACT_DATA
             currentTime = millis();
-            sensorVal = analogRead(analogPinSensor);
-            Serial.print(currentTime);
-            Serial.print(",");
-            Serial.print(sensorVal);
-            Serial.println();
-            delay(100);
+            
+            if (currentTime - previousTime >= interval) {
+                previousTime = currentTime;
+                sensorVal = analogRead(analogPinSensor);
+                voltage = (float)sensorVal / divisor;
+
+                Serial.print(currentTime);
+                Serial.print(",");
+                Serial.print(voltage, 2);
+                Serial.println();
+            }
         #endif
     }
   #endif
