@@ -21,8 +21,8 @@
     //#define ANALOG_READ_TEST
     //#define EMG_READ_TEST
     //#define SERVO_TEST
-    //#define EMG_GRAPH_TEST
-    #define EMG_EXTRACT_DATA
+    #define EMG_GRAPH_TEST
+    //#define EMG_EXTRACT_DATA
 
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *
