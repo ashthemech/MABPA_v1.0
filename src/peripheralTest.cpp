@@ -55,6 +55,15 @@
         unsigned long previousTime = 0;
         const long interval = 1; //1ms interval (1000Hz)
     #endif
+
+    #ifdef EMG_SERVO_INTEGRATION
+        Servo brakeServo;
+        int analogPinSensor = A0;
+        int servoPin = 4;
+        const int flexThreshold = 512; // flex detection
+        const int servoRestAngle = 0;  // rest
+        const int servoFlexAngle = 90; // flexed
+    #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -106,6 +115,17 @@
             analogReadResolution(10);
             Serial.begin(115200);
             currentTime = 0;
+        #endif
+
+        #ifdef EMG_SERVO_INTEGRATION
+            Serial.begin(115200);
+            analogReadResolution(10);
+            pinMode(analogPinSensor,INPUT);
+
+            pinMode(servoPin, OUTPUT);
+            brakeServo.attach(servoPin);
+            brakeServo.write(servoRestAngle);
+            delay(1000);
         #endif
     }
 
@@ -163,6 +183,19 @@
                 Serial.print(voltage, 2);
                 Serial.println();
             }
+        #endif
+
+        #ifdef EMG_SERVO_INTEGRATION
+            int EMGval = analogRead(analogPinSensor);
+            
+            if (EMGval > flexThreshold) {
+                brakeServo.write(servoFlexAngle);
+            } else {
+                brakeServo.write(servoRestAngle);                
+            }
+
+                delay(10);
+
         #endif
     }
   #endif
