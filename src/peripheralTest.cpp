@@ -176,11 +176,11 @@
             if (currentTime - previousTime >= interval) {
                 previousTime = currentTime;
                 sensorVal = analogRead(analogPinSensor);
-                voltage = (float)sensorVal / divisor;
+                //voltage = (float)sensorVal / divisor;
 
                 Serial.print(currentTime);
                 Serial.print(",");
-                Serial.print(voltage, 2);
+                //Serial.print(voltage, 2);
                 Serial.println();
             }
         #endif
