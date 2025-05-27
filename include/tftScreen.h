@@ -7,8 +7,8 @@
  * Modified on 02.20.2025, 2:04pm
  */
 
- #ifndef PERIPHERAL_TEST_H // Header guard
- #define PERIPHERAL_TEST_H //
+ #ifndef TFT_SCREEN_H // Header guard
+ #define TFT_SCREEN_H //
  
  /*******************************************************************************
   * PUBLIC #INCLUDES                                                            *
@@ -17,14 +17,6 @@
  /*******************************************************************************
   * PUBLIC #DEFINES                                                             *
   ******************************************************************************/
-    //#define SLOW_BLINK_TEST
-    //#define ANALOG_READ_TEST
-    //#define EMG_READ_TEST
-    #define SERVO_TEST
-    //#define EMG_GRAPH_TEST
-    //#define EMG_EXTRACT_DATA
-    //#define SPI_TEST
-    //#define SCREEN_TEST
 
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *
@@ -34,4 +26,6 @@
   * PUBLIC FUNCTION PROTOTYPES                                                  *
   ******************************************************************************/
  
+//  bool screenInit();
+
  #endif	/* PERIPHERAL_TEST_H */ // End of header guard

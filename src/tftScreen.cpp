@@ -10,7 +10,14 @@
  * #INCLUDES                                                                   *
  ******************************************************************************/
   #include <Arduino.h>
-  #include "myowareSensor.h"
+  #include "tftScreen.h"
+
+  #include <SPI.h>
+  #include <Adafruit_GFX.h>
+  #include <Adafruit_SharpMem.h>
+  #include <ILI9341_t3.h>
+  #include <font_DroidSans_Bold.h>
+  #include <font_AwesomeF200.h>
 
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
@@ -23,26 +30,15 @@
 /*******************************************************************************
  * PRIVATE VARIABLES                                                           *
  ******************************************************************************/
-    static int analogPinSensor = 14; //myoware pin number
-    const float divisor = 310.303; //get V from the ADC value
+    //define the SPI pins for the tft screen
+    #define TFT_DC      9
+    #define TFT_CS      10
+    #define TFT_RST    255  // 255 = unused, connect to 3.3V
+    #define TFT_MOSI    11
+    #define TFT_SCLK    13
+    #define TFT_MISO    12
+    // ILI9341_t3 tft = ILI9341_t3(TFT_CS, TFT_DC, TFT_RST, TFT_MOSI, TFT_SCLK, TFT_MISO);
 
-    static volatile int sensorVal = 0;
-    static volatile bool sampleReady = false;
-
-
-
-    float voltage = 0.00;
-    unsigned long currTime = 0;
-    unsigned long prevTime = 0;
-    const long interval = 500; //us interval (2000Hz)
-
-    //                 sensorVal = analogRead(analogPinSensor);
-    //             voltage = (float)sensorVal / divisor;
-    //             Serial.print(">");
-    //             Serial.print("sEMG1:");
-    //             Serial.print(voltage, 2);
-    //             Serial.println();
-    //             delay(100);
 /*******************************************************************************
  * PRIVATE FUNCTIONS PROTOTYPES                                                *
  ******************************************************************************/
@@ -50,53 +46,27 @@
 /*******************************************************************************
  * PUBLIC FUNCTION IMPLEMENTATIONS                                             *
  ******************************************************************************/
-bool muscleSensorInit()
-{
-    //initialization code for sensor
-    pinMode(analogPinSensor, INPUT);
-    analogReadResolution(10);
+// bool screenInit()
+//{
+    // uint16_t testColor = ILI9341_RED;
+    // int16_t x = 5, y = 5;
 
-    //sensor initialization check
-    const int numSamples = 1000;
-    int minThreshold = 900;
-    int maxThreshold = 20;
+    // //initialization code for screen
+    // tft.begin();
+    // tft.setRotation(1); //check with ben on screen orientation
 
-    const int tolerance = 10;
+    // tft.drawPixel(x, y, testColor);
+    // delay(5);  //allow time to update
 
-    //for the number of samples, read the sensor value and add it to the total
-    for (int i = 0; i < numSamples; i++) {
-        sensorVal = analogRead(analogPinSensor);
-        if(minThreshold > sensorVal){
-            minThreshold = sensorVal;
-        }
-        if(maxThreshold < sensorVal){
-            maxThreshold = sensorVal;
-        }
-        delay(10);
-    }
+    // //read back the pixel value
+    // uint16_t readColor = tft.readPixel(x, y);
 
-    //and not disconnected (1.65) -> sensor is working
-    bool notDisconnected = fabs(maxThreshold-minThreshold) > tolerance; 
-
-    return (notDisconnected);
-}
-
-void readMuscleSensor(){
-    sampleReady = true;
-}
-
-int getSensorVal(){
-    sensorVal = analogRead(analogPinSensor);
-    return sensorVal;
-}
-
-bool isSampleReady() {
-    return sampleReady;
-}
-
-void clearSampleFlag() {
-    sampleReady = false;
-}
+    // if (readColor == testColor) {
+    //     return true;  //screen responded correctly
+    // } else {
+    //     return false; //mismatch suggests screen failed to initialize
+    // }
+//}
 /*******************************************************************************
  * PRIVATE FUNCTION IMPLEMENTATIONS                                            *
  ******************************************************************************/

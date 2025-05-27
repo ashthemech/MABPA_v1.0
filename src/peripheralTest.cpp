@@ -1,3 +1,4 @@
+
 /* 
  * File:   peripheralTest.cpp
  * Author: Ashton Coons
@@ -6,12 +7,14 @@
  * Modified on 02.20.2025, 2:04pm
  */
 
+ #ifdef PERIPHERAL_TEST
 /*******************************************************************************
  * #INCLUDES                                                                   *
  ******************************************************************************/
     #include <Arduino.h>
     #include <Servo.h>   
     #include "peripheralTest.h"
+    #include "myowareSensor.h"
 
     #include "imxrt.h"
     #include <SPI.h>
@@ -48,9 +51,14 @@
         Servo brakeServo;
         int servoPin = 4;
         int servoPos = 0;
+        int count = 0;
     #endif
 
     #ifdef EMG_GRAPH_TEST
+        float filteredVal = 0;
+        const float alpha = 0.3;  // between 0.01 (very smooth) and 0.3 (fast reacting)
+
+
         int analogPinSensor = A0;
         int sensorVal = 0;
         float divisor = 310.303; //get V from the ADC value
@@ -60,13 +68,15 @@
         const long inte = 500; //us interval (2000Hz)
     #endif
 
-    // #ifdef EMG_EXTRACT_DATA
-    //     int analogPinSensor = A0;
-    //     int sensorVal = 0;
-    //     unsigned long currentTime = 0;
-    //     unsigned long previousTime = 0;
-    //     const long interval = 1; //1ms interval (1000Hz)
-    // #endif
+    #ifdef EMG_EXTRACT_DATA
+        int analogPinSensor = A0;
+        int sensorVal = 0;
+        float divisor = 310.303; //get V from the ADC value
+        float voltage = 0.00;
+        unsigned long currentTime = 0;
+        unsigned long previousTime = 0;
+        const long interval = 667; //(1500Hz)
+    #endif
 
     #ifdef SPI_TEST
         #define CS 10
@@ -99,7 +109,6 @@
   /*******************************************************************************
    * MAIN                                                                        *
    ******************************************************************************/
-  #ifdef PERIPHERAL_TEST
     void setup(){
         #ifdef SLOW_BLINK_TEST
             pinMode(ledPin, OUTPUT);
@@ -130,11 +139,11 @@
             Serial.begin(115200);
         #endif
 
-        // #ifdef EMG_EXTRACT_DATA
-        //     pinMode(analogPinSensor, INPUT);
-        //     analogReadResolution(10);
-        //     Serial.begin(115200);
-        // #endif
+        #ifdef EMG_EXTRACT_DATA
+            pinMode(analogPinSensor, INPUT);
+            analogReadResolution(10);
+            Serial.begin(115200);
+        #endif
 
         #ifdef SPI_TEST
             pinMode(CS, OUTPUT);
@@ -230,40 +239,49 @@
         #endif
 
         #ifdef SERVO_TEST
-            for(servoPos = 10; servoPos < 170; servoPos += 1){
-                brakeServo.write(servoPos);              
-                delay(5);                       
-            } 
-            for(servoPos = 180; servoPos>=1; servoPos-=1){                                
-                brakeServo.write(servoPos);              
-                delay(5);                       
+            if (count % 2 == 0) { //every other second
+                brakeServo.write(10); //set servo to 0 degrees
+                delay(10);
+            } else {
+                brakeServo.write(130); //set servo to 180 degrees
+                delay(10);
             }
+            delay(4000);
+            count++; 
         #endif
 
         #ifdef EMG_GRAPH_TEST
                 sensorVal = analogRead(analogPinSensor);
                 voltage = (float)sensorVal / divisor;
+
+                //filter test
+                filteredVal = alpha * voltage + (1 - alpha) * filteredVal;
                 Serial.print(">");
-                Serial.print("sEMG1:");
+                Serial.print("sEMG raw:");
                 Serial.print(voltage, 2);
+                Serial.println();
+
+                Serial.print(">");
+                Serial.print("sEMG filtered:");
+                Serial.print(filteredVal, 2);
                 Serial.println();
                 delay(100);
         #endif
 
-        // #ifdef EMG_EXTRACT_DATA
-        //     currentTime = millis();
+        #ifdef EMG_EXTRACT_DATA
+            currentTime = micros();
             
-        //     if (currentTime - previousTime >= interval) {
-        //         previousTime = currentTime;
-        //         sensorVal = analogRead(analogPinSensor);
-        //         //voltage = (float)sensorVal / divisor;
+            if (currentTime - previousTime >= interval) {
+                previousTime = currentTime;
+                sensorVal = analogRead(analogPinSensor);
+                voltage = (float)sensorVal / divisor;
 
-        //         Serial.print(currentTime);
-        //         Serial.print(",");
-        //         //Serial.print(voltage, 2);
-        //         Serial.println();
-        //     }
-        // #endif
+                Serial.print(currentTime);
+                Serial.print(",");
+                Serial.print(voltage, 2);
+                Serial.println();
+            }
+        #endif
 
         #ifdef SPI_TEST
             digitalWriteFast(CS, LOW);         // Assert CS (normally LOW)
