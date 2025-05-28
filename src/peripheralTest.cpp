@@ -94,6 +94,31 @@
 
     #endif
 
+    #ifdef BATTERY_TEST
+        int batteryPin = A3;
+        int batteryTogglePin = 40; // pin to toggle battery measurement on/off
+        const int numSamples = 20;  // size of moving average window
+        float samples[numSamples] = {0};  // circular buffer for samples
+        int sampleIndex = 0;
+
+        float deadValue = 2.654;     // your dead battery voltage
+        float fullValue = 3.008;   //3.002 on multimeter, 3.008 on ADC
+        float batteryDivisor = fullValue - deadValue;
+
+        float lastPercent = 0.0;
+        const float hysteresisThreshold = 0.5; // update percent only if change > 1%
+
+
+        //define the SPI pins for the tft screen
+        #define TFT_DC      9
+        #define TFT_CS      10
+        #define TFT_RST    255  // 255 = unused, connect to 3.3V
+        #define TFT_MOSI    11
+        #define TFT_SCLK    13
+        #define TFT_MISO    12
+        ILI9341_t3 tft = ILI9341_t3(TFT_CS, TFT_DC, TFT_RST, TFT_MOSI, TFT_SCLK, TFT_MISO);
+    #endif
+
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -106,6 +131,41 @@
   * PRIVATE FUNCTION IMPLEMENTATIONS                                            *
   ******************************************************************************/
  
+  float readBatteryVoltage() {
+    // Read and scale ADC
+    int raw = analogRead(batteryPin);
+    float voltage = raw * (3.3f / 1023.0f);  // Teensy 10-bit ADC
+
+    // Add to samples circular buffer
+    samples[sampleIndex] = voltage;
+    sampleIndex = (sampleIndex + 1) % numSamples;
+
+    // Compute moving average
+    float sum = 0;
+    for (int i = 0; i < numSamples; i++) {
+        sum += samples[i];
+    }
+    float avgVoltage = sum / numSamples;
+
+    return avgVoltage;
+}
+
+float getBatteryPercent(float voltage) {
+    float percent = (voltage - deadValue) / batteryDivisor * 100.0f;
+    percent = constrain(percent, 0, 100);
+
+    // Clamp very low percentages to 0 to avoid flicker
+    //if (percent < 2.0f) percent = 0.0f;
+
+    // Hysteresis: update only if change is significant
+    if (abs(percent - lastPercent) >= hysteresisThreshold) {
+        lastPercent = percent;
+    }
+
+    return lastPercent;
+}
+
+
   /*******************************************************************************
    * MAIN                                                                        *
    ******************************************************************************/
@@ -209,12 +269,24 @@
             tft.print((char)68); //empty battery
 
             //build battery test circuit and scale to 0-3.3V for input into ADC, scale with battery icone and send flashing alert when battery dips
-            
+        #endif
 
+        #ifdef BATTERY_TEST
+            Serial.begin(115200);
+            pinMode(batteryPin, INPUT);
+            pinMode(batteryTogglePin, OUTPUT);
+            digitalWrite(batteryTogglePin, HIGH); //enable battery measurement
 
+            // Initialize samples array with initial readings
+            float initVoltage = analogRead(batteryPin) * (3.3f / 1023.0f);
+            for (int i = 0; i < numSamples; i++) samples[i] = initVoltage;
 
-            
-
+            tft.begin();
+            tft.setRotation(-1);
+            tft.fillScreen(ILI9341_BLACK);
+            tft.setTextColor(ILI9341_YELLOW);
+            tft.setFont(AwesomeF200_20);
+    
         #endif
     }
 
@@ -251,21 +323,21 @@
         #endif
 
         #ifdef EMG_GRAPH_TEST
-                sensorVal = analogRead(analogPinSensor);
-                voltage = (float)sensorVal / divisor;
+            sensorVal = analogRead(analogPinSensor);
+            voltage = (float)sensorVal / divisor;
 
-                //filter test
-                filteredVal = alpha * voltage + (1 - alpha) * filteredVal;
-                Serial.print(">");
-                Serial.print("sEMG raw:");
-                Serial.print(voltage, 2);
-                Serial.println();
+            //filter test
+            filteredVal = alpha * voltage + (1 - alpha) * filteredVal;
+            Serial.print(">");
+            Serial.print("sEMG raw:");
+            Serial.print(voltage, 2);
+            Serial.println();
 
-                Serial.print(">");
-                Serial.print("sEMG filtered:");
-                Serial.print(filteredVal, 2);
-                Serial.println();
-                delay(100);
+            Serial.print(">");
+            Serial.print("sEMG filtered:");
+            Serial.print(filteredVal, 2);
+            Serial.println();
+            delay(100);
         #endif
 
         #ifdef EMG_EXTRACT_DATA
@@ -296,5 +368,24 @@
         #ifdef SCREEN_TEST
             
         #endif
+
+        #ifdef BATTERY_TEST
+
+            //batteryTogglePin = HIGH; //enable battery measurement
+
+            float voltage = readBatteryVoltage();
+            if (voltage < 0.01f) voltage = 0.0f;  // clamp very small noise
+
+            float percent = getBatteryPercent(voltage);
+
+            Serial.print("Battery Voltage: ");
+            Serial.println(voltage, 3);
+
+            Serial.print("Battery Percent: ");
+            Serial.println(percent, 1);
+
+            delay(500);
+
+        #endif
     }
-  #endif
+#endif
