@@ -7,8 +7,10 @@
  * Modified on 02.20.2025, 2:04pm
  */
 
- #ifndef PERIPHERAL_TEST_H // Header guard
- #define PERIPHERAL_TEST_H //
+ #ifndef BATTERY_H // Header guard
+ #define BATTERY_H //
+
+ #include <ILI9341_t3.h>
  
  /*******************************************************************************
   * PUBLIC #INCLUDES                                                            *
@@ -17,15 +19,6 @@
  /*******************************************************************************
   * PUBLIC #DEFINES                                                             *
   ******************************************************************************/
-    //#define SLOW_BLINK_TEST
-    //#define ANALOG_READ_TEST
-    //#define EMG_READ_TEST
-    //#define SERVO_TEST
-    #define EMG_GRAPH_TEST
-    //#define EMG_EXTRACT_DATA
-    //#define SPI_TEST
-    //#define SCREEN_TEST
-    //#define BATTERY_TEST
 
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *
@@ -35,4 +28,12 @@
   * PUBLIC FUNCTION PROTOTYPES                                                  *
   ******************************************************************************/
  
- #endif	/* PERIPHERAL_TEST_H */ // End of header guard
+ void batteryInit();
+
+ float readBatteryVoltage();
+
+ float getBatteryPercent(float voltage);
+
+ void updateBatteryDisplay(ILI9341_t3 &tft, int percent);
+
+ #endif	/* BATTERY_H */ // End of header guard

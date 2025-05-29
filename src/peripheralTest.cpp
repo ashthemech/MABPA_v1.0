@@ -130,7 +130,7 @@
  /*******************************************************************************
   * PRIVATE FUNCTION IMPLEMENTATIONS                                            *
   ******************************************************************************/
- 
+#ifdef BATTERY_TEST
   float readBatteryVoltage() {
     // Read and scale ADC
     int raw = analogRead(batteryPin);
@@ -165,7 +165,7 @@ float getBatteryPercent(float voltage) {
     return lastPercent;
 }
 
-
+#endif
   /*******************************************************************************
    * MAIN                                                                        *
    ******************************************************************************/
@@ -312,10 +312,10 @@ float getBatteryPercent(float voltage) {
 
         #ifdef SERVO_TEST
             if (count % 2 == 0) { //every other second
-                brakeServo.write(10); //set servo to 0 degrees
+                brakeServo.write(115); //UNBRAKED
                 delay(10);
             } else {
-                brakeServo.write(130); //set servo to 180 degrees
+                brakeServo.write(70); //BRAKED
                 delay(10);
             }
             delay(4000);

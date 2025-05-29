@@ -16,14 +16,13 @@
 
 
   #include <SPI.h>
-  #include <Adafruit_GFX.h>
-  #include <Adafruit_SharpMem.h>
   #include <ILI9341_t3.h>
   #include <font_DroidSans_Bold.h>
   #include <font_AwesomeF200.h>
 
   #include "tftScreen.h"
   #include "myowareSensor.h"
+  #include "battery.h"
 
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
@@ -42,7 +41,8 @@
 /*******************************************************************************
  * PRIVATE TYPEDEFS                                                            *
  ******************************************************************************/
-
+  enum BrakeState { BRAKE_RELEASED, BRAKE_ENGAGED };
+  BrakeState brakeState = BRAKE_RELEASED;
 /*******************************************************************************
  * PRIVATE VARIABLES                                                           *
  ******************************************************************************/
@@ -54,10 +54,14 @@
   IntervalTimer muscleTimer;
 
   //hysteresis bounds for a flex
-  const int highThreshold = 300;
-  const int lowThreshold  = 100;
+  const int engageThreshold = 500;
+  const int servoThreshold  = 750;
+  const int relaxThreshold  = 200;
 
   bool flexDetected = false;
+
+  unsigned long flexReleaseStart = 0;
+  const unsigned long releaseDebounce = 100;  // milliseconds
   
   //sampling rate set up
     // unsigned long currentTime = 0;
@@ -105,7 +109,7 @@ bool systemReset(){
 
     /* ILI9341 Screen Setup */
     tft.begin();
-    tft.setRotation(1); //check with ben on screen orientation
+    tft.setRotation(-1); //check with ben on screen orientation
     tft.fillScreen(ILI9341_BLACK);
     tft.setTextColor(ILI9341_YELLOW);
     tft.setFont(DroidSans_20_Bold);
@@ -153,6 +157,8 @@ bool systemReset(){
     
       // COME BACK TO THIS
     } 
+
+    batteryInit();
     //else {
     //   Serial.println("Sensor not detected.");
     //   while (1); // halt or retry
@@ -166,32 +172,53 @@ bool systemReset(){
 
   void loop() {
 
+    // float voltage = readBatteryVoltage();
+    // if (voltage < 0.01f) voltage = 0.0f;  // clamp very small noise
+
+    // float percent = getBatteryPercent(voltage);
+
+    // updateBatteryDisplay(tft, percent);
+    // delay(500);
+
     if (isSampleReady()) {
         clearSampleFlag();
         int muscle = getSensorVal();
+        // tft.setFont(DroidSans_20_Bold);
+        // tft.fillScreen(ILI9341_BLACK);
+        // tft.setCursor(10, 50);
+        // tft.print("No Change Detected");
+        // tft.setCursor(10, 100);
+        // tft.print(muscle);
+        tft.fillScreen(ILI9341_BLACK);
+        tft.setCursor(50, 50);
+        tft.print(muscle);
 
-        //////////////////
-        //Serial.print(muscle);
-        //Serial.println();
-
-        if (!flexDetected && muscle > highThreshold) {
-            flexDetected = true;
+        if (brakeState == BRAKE_RELEASED){
+          //only allow engagement if clearly above the engage threshold
+          if (muscle > engageThreshold && muscle < servoThreshold) {
+            brakeState = BRAKE_ENGAGED;
             tft.fillScreen(ILI9341_BLACK);
-            tft.setCursor(0, 0);
-            tft.print("FLEX DETECTED");
-            brakeServo.write(130);              
-            delay(10); 
-            // trigger brake / servo
-        }
-        else if (flexDetected && muscle < lowThreshold) {
-            flexDetected = false;
-            tft.fillScreen(ILI9341_BLACK);
-            tft.setCursor(0, 0);
-            tft.print("FLEX RELEASED");
-            brakeServo.write(10);              
+            tft.setCursor(10, 50);
+            tft.print("ENGAGED BRAKE");
+            brakeServo.write(70);
             delay(10);
-            // release brake / servo
+            flexReleaseStart = false; // reset release timer
+          }
         }
+        else if (brakeState == BRAKE_ENGAGED) {
+          if(!flexReleaseStart && muscle < servoThreshold){
+            tft.fillScreen(ILI9341_BLACK);
+            tft.setCursor(10, 50);
+            tft.print("RELEASED BRAKE");
+            brakeServo.write(115);
+            delay(10);
+            flexReleaseStart = true; 
+          }
+          else if(flexReleaseStart && muscle < relaxThreshold){
+            brakeState = BRAKE_RELEASED;
+            flexReleaseStart = false;
+          }
+        }
+      }
     }
-  }
 #endif

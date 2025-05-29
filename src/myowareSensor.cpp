@@ -36,6 +36,9 @@
     unsigned long prevTime = 0;
     const long interval = 500; //us interval (2000Hz)
 
+    float filteredVal = 0;
+    const float alpha = 0.3;  // between 0.01 (very smooth) and 0.3 (fast reacting)
+
     //                 sensorVal = analogRead(analogPinSensor);
     //             voltage = (float)sensorVal / divisor;
     //             Serial.print(">");
@@ -87,7 +90,8 @@ void readMuscleSensor(){
 
 int getSensorVal(){
     sensorVal = analogRead(analogPinSensor);
-    return sensorVal;
+    filteredVal = alpha * sensorVal + (1 - alpha) * filteredVal;
+    return filteredVal;
 }
 
 bool isSampleReady() {
