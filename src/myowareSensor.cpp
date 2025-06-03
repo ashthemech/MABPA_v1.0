@@ -37,7 +37,7 @@
     const long interval = 500; //us interval (2000Hz)
 
     float filteredVal = 0;
-    const float alpha = 0.3;  // between 0.01 (very smooth) and 0.3 (fast reacting)
+    const float alpha = 0.2;  // between 0.01 (very smooth) and 0.3 (fast reacting)
 
     //                 sensorVal = analogRead(analogPinSensor);
     //             voltage = (float)sensorVal / divisor;

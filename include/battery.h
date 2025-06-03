@@ -28,12 +28,16 @@
   * PUBLIC FUNCTION PROTOTYPES                                                  *
   ******************************************************************************/
  
- void batteryInit();
+ bool batteryInit();
 
  float readBatteryVoltage();
 
  float getBatteryPercent(float voltage);
 
- void updateBatteryDisplay(ILI9341_t3 &tft, int percent);
+ void updateBatteryDisplay(ILI9341_t3 &tft);
+
+ bool updateBatteryReading();
+
+ void updateBatterySamples();
 
  #endif	/* BATTERY_H */ // End of header guard
