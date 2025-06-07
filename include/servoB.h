@@ -7,8 +7,8 @@
  * Modified on 02.20.2025, 2:04pm
  */
 
- #ifndef MYOWARE_SENSOR_H // Header guard
- #define MYOWARE_SENSOR_H //
+ #ifndef SERVO_B_H // Header guard
+ #define SERVO_B_H //
  
  /*******************************************************************************
   * PUBLIC #INCLUDES                                                            *
@@ -24,26 +24,25 @@
 
  /*******************************************************************************
   * PUBLIC FUNCTION PROTOTYPES                                                  *
-  ******************************************************************************/
- 
- void muscleSensorInit();
+ /*******************************************************************************
+ Function
+   screenInit
+ Parameters
+   none
+ Returns
+   false if any of the screen functions failed, true if all succeeded
+ Description
+   initializes the TFT screen for SPI communication, sets the orientation, 
+   and sets the initial text color and font.
+ Notes
 
- void readMuscleSensor();
+ Author
+   Ashton Coons, 5/12/25,
+ ****************************************************************************/
+  bool servoInit();
 
- int getSensorVal();
+  void servoBrake();
 
- bool isSampleReady();
-
- void clearSampleFlag();
-
- int muscleValue();
-
- void collectSamples(int flexVal);
-
- void resetEMGData();
-
- int findMinEMG();
-
- int findMaxEMG();
+  void servoRelease();
 
  #endif	/* PERIPHERAL_TEST_H */ // End of header guard

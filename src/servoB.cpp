@@ -10,37 +10,27 @@
  * #INCLUDES                                                                   *
  ******************************************************************************/
   #include <Arduino.h>
-  #include "myowareSensor.h"
+  #include <Servo.h> 
+
+  #include "servoB.h"
 
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
  ******************************************************************************/
-
+//define the servo pin and battery pin
+  #define SERVO_PIN    4
+  #define BATTERY_PIN 17
 /*******************************************************************************
  * PRIVATE TYPEDEFS                                                            *
  ******************************************************************************/
-  //interrupt timer for muscle sensor sampling
-  IntervalTimer muscleTimer;
+  //define servo object for the brake servo (arduino class)
+  Servo brakeServo;
 /*******************************************************************************
  * PRIVATE VARIABLES                                                           *
  ******************************************************************************/
-    static int analogPinSensor = 14; //myoware pin number
-    const float divisor = 310.303; //get V from the ADC value
-
-    static volatile int sensorVal = 0;
-    static volatile bool sampleReady = false;
-
-    float voltage = 0.00;
-    unsigned long currTime = 0;
-    unsigned long prevTime = 0;
-    const long interval = 666; //us interval (1500Hz)
-
-    float filteredVal = 0;
-    const float alpha = 0.2;  // between 0.01 (very smooth) and 0.3 (fast reacting)
-
-    const int SAMPLE_COUNT = 1500 * 15;  // 22500 samples
-    uint16_t emgData[SAMPLE_COUNT];
-    int dataIndex = 0;
+//define the servo positions for brake release and engage
+  const int brakeReleasePos = 115;
+  const int brakeEngagePos = 70;
 
 /*******************************************************************************
  * PRIVATE FUNCTIONS PROTOTYPES                                                *
@@ -49,63 +39,62 @@
 /*******************************************************************************
  * PUBLIC FUNCTION IMPLEMENTATIONS                                             *
  ******************************************************************************/
-void muscleSensorInit()
-{
-    //initialization code for sensor
-    pinMode(analogPinSensor, INPUT);
-    analogReadResolution(10);
-    muscleTimer.begin(readMuscleSensor, interval);
-}
+bool servoInit(){
+    //set servo pin mode and attach the servo
+    pinMode(SERVO_PIN, OUTPUT);
+    brakeServo.attach(SERVO_PIN);
+    //write servo to initial brake position
+    brakeServo.write(brakeReleasePos);
+    delay(300);  // Let servo settle
 
-void readMuscleSensor(){
-    sampleReady = true;
-}
+    //set up the battery pin sampling variables to determine if the servo movement causes a voltage dip
+    const int numSamples = 10;
+    const float thresholdDipVolts = 0.005f; // ~5mV dip
+    const float ADC_SCALE = 3.3f / 1023.0f;
+    int rawBefore = 0, rawDuring = 0;
+    float vBefore = 0.0f, vDuring = 0.0f;
 
-int getSensorVal(){
-    sensorVal = analogRead(analogPinSensor);
-    filteredVal = alpha * sensorVal + (1 - alpha) * filteredVal;
-    return filteredVal;
-}
+    // 1. Sample battery voltage before movement
+    for (int i = 0; i < numSamples; i++) {
+        rawBefore += analogRead(BATTERY_PIN);
+        delayMicroseconds(500);
+    }
+    rawBefore /= numSamples;
+    vBefore = rawBefore * ADC_SCALE;
 
-bool isSampleReady() {
-    return sampleReady;
-}
+    // 2. Trigger servo to engage brake
+    brakeServo.write(brakeEngagePos);
+    delay(200); // Let movement begin
 
-void clearSampleFlag() {
-    sampleReady = false;
-}
+    // 3. Sample battery voltage during movement
+    for (int i = 0; i < numSamples; i++) {
+        rawDuring += analogRead(BATTERY_PIN);
+        delayMicroseconds(500);
+    }
+    rawDuring /= numSamples;
+    vDuring = rawDuring * ADC_SCALE;
 
-void collectSamples(int flexVal)
-{
-    if (dataIndex < SAMPLE_COUNT) {
-        emgData[dataIndex] = flexVal;
-        dataIndex++; 
+    // 4. Reset servo
+    brakeServo.write(brakeReleasePos);
+    //calculate the dip in voltage
+    float dip = vBefore - vDuring;
+
+    // 6. Return results based on dip
+    if (dip > thresholdDipVolts) {
+        return true;
+    } else {
+        return false;
     }
 }
 
-void resetEMGData() {
-    dataIndex = 0;
-    memset(emgData, 0, sizeof(emgData));  // optional: zero out old data
+void servoBrake()
+{
+  brakeServo.write(brakeEngagePos);
 }
 
-int findMaxEMG()
+void servoRelease()
 {
-    uint16_t maxEMG = 0;
-    for (int i = 0; i < dataIndex; i++) {
-        uint16_t val = emgData[i];
-        if (val > maxEMG) maxEMG = val;
-    }
-    return maxEMG;
-}
-
-int findMinEMG()
-{
-    uint16_t minEMG = 1023;
-    for (int i = 0; i < dataIndex; i++) {
-        uint16_t val = emgData[i];
-        if (val < minEMG) minEMG = val;
-    }
-    return minEMG;
+  brakeServo.write(brakeReleasePos);
 }
 
 /*******************************************************************************
