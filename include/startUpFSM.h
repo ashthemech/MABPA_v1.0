@@ -1,16 +1,14 @@
 /* 
 
- * File:   battery.h
+ * File:   peripheralTest.h
  * Author: Ashton Coons
- * Brief: Header for the battery source file
+ * Brief: Header for test harness for the required MABPA project peripherals on the Teensy 4.1
  * Created on 02.20.2025, 1:53pm
- * Modified on 02.20.2025, 2:04pm
+ * Modified on 05.28.2025, 1:24pm
  */
 
- #ifndef BATTERY_H // Header guard
- #define BATTERY_H //
-
- #include <ILI9341_t3.h>
+ #ifndef STARTUP_FSM_H //header guard
+ #define STARTUP_FSM_H
  
  /*******************************************************************************
   * PUBLIC #INCLUDES                                                            *
@@ -23,49 +21,33 @@
  /*******************************************************************************
   * PUBLIC TYPEDEFS                                                             *
   ******************************************************************************/
-
+enum StartupState {
+  DRAW_LOGO,
+  INIT_MUSCLE,
+  INIT_SERVO,
+  INIT_BATTERY,
+  LOW_BATT,
+  SYSTEM_READY,
+  SYSTEM_ERROR
+};
  /*******************************************************************************
   * PUBLIC FUNCTION PROTOTYPES                                                  *
   ******************************************************************************/
+
 /*******************************************************************************
  Function
-   batteryInit
+   runSTartupFSM
  Parameters
    none
  Returns
-   false if any of the battery functions failed, true if all succeeded
+   StartupState (state of the FSM)
  Description
-   initializes the battery by attaching the pins, setting mode to input, and initializes
-   the battery readings array to ensure battery percent is shown upon startup
+   runs the start up finite state machine 
  Notes
 
  Author
    Ashton Coons, 5/12/25,
  ****************************************************************************/
- bool batteryInit();
+StartupState runStartupFSM();
 
- /*******************************************************************************
- Function
-   readBatteryVoltage
- Parameters
-   none
- Returns
-   scaled ADC voltage of battery
- Description
-   uses analogRead to read the battery voltage
- Notes
-
- Author
-   Ashton Coons, 5/12/25,
- ****************************************************************************/
- float readBatteryVoltage();
-
- float getBatteryPercent(float voltage);
-
- void updateBatteryDisplay(ILI9341_t3 &tft);
-
- bool updateBatteryReading();
-
- void updateBatterySamples();
-
- #endif	/* BATTERY_H */ // End of header guard
+#endif

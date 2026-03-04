@@ -1,9 +1,9 @@
 /* 
- * File:   myowareSensor.cpp
+ * File:   tftScreen.cpp
  * Author: Ashton Coons
- * Brief: Myoware 2.0 muscle sensor source file for MAPBA system
+ * Brief: tft screen source code file for screen functions used in MABPA system
  * Created on 2 19, 2025, 3:15pm
- * Modified on 2 19, 2025, 4:04pm
+ * Modified on 5 25, 2025, 6:04pm
  */
 #ifndef PERIPHERAL_TEST
  /******************************************************************************
@@ -22,15 +22,7 @@
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
  ******************************************************************************/
-
-/*******************************************************************************
- * PRIVATE TYPEDEFS                                                            *
- ******************************************************************************/
-
-/*******************************************************************************
- * PRIVATE VARIABLES                                                           *
- ******************************************************************************/
-    //define the SPI pins for the tft screen
+//define the SPI pins for the tft screen
     #define TFT_DC       9
     #define TFT_CS      10
     #define TFT_RST    255  // 255 = unused, connect to 3.3V
@@ -43,13 +35,20 @@
     #define T_DIN       11 
     #define T_DO        12 
     #define T_IRQ        2 
-
+/*******************************************************************************
+ * PRIVATE TYPEDEFS                                                            *
+ ******************************************************************************/
+//MOSI screen type declaration
     ILI9341_t3 tft = ILI9341_t3(TFT_CS, TFT_DC, TFT_RST, TFT_MOSI, TFT_SCLK, TFT_MISO);
+//MISO screen stype declatration
     XPT2046_Touchscreen ts(T_CS, T_IRQ);
-
+/*******************************************************************************
+ * PRIVATE VARIABLES                                                           *
+ ******************************************************************************/
     int flexTimer = 15;
     bool flexTimerActive = false;
     unsigned long lastFlexUpdate = 0;
+    int prevBarWidth = 0;
 
 /*******************************************************************************
  * PRIVATE FUNCTIONS PROTOTYPES                                                *
@@ -106,16 +105,7 @@ void drawLogo(){
     tft.write(char(6));
 }
 
-void testFont()
-{
-  tft.fillScreen(ILI9341_BLACK);
-  tft.setTextColor(ILI9341_YELLOW);
-  tft.setFont(AwesomeF200_72); // <-- crash here on cold boot
-  tft.setCursor(10, 100);
-  tft.write(char(6)); // bike logo
-}
-
-void batteryFail(){
+void batteryFailPrompt(){
     tft.fillScreen(ILI9341_BLACK);
     tft.setTextColor(ILI9341_YELLOW);
     tft.setFont(DroidSans_12_Bold);
@@ -142,7 +132,7 @@ void batteryFail(){
     }
 }
 
-void servoFail()
+void servoFailPrompt()
 {
     tft.fillScreen(ILI9341_BLACK);
     tft.setTextColor(ILI9341_YELLOW);
@@ -169,38 +159,6 @@ void servoFail()
         tft.print("CRITICAL BRAKE ERROR");
         delay(500);
     }
-}
-
-void touchScreenTest()
-{
-    Serial.begin(115200);
-    tft.fillScreen(ILI9341_BLACK);
-    tft.setTextColor(ILI9341_YELLOW);
-    tft.setFont(DroidSans_20_Bold);
-    tft.setCursor(10, 10);
-    tft.print("Touch the screen to test");
-
-    digitalWrite(TFT_CS, HIGH);  // Disable TFT
-    digitalWrite(T_CS, LOW);     // Enable touch
-    
-    while (true) {
-        if (ts.touched()) {
-        TS_Point p = ts.getPoint();
-        if(p.x > 2100)
-        {
-            Serial.print("YES");
-        }
-        else if(p.x < 1900)
-        {
-            Serial.print("NO");
-        }
-        else
-        {
-            Serial.print("UNKNOWN");
-        }
-        delay(500); 
-    }
-}
 }
 
 void musclePlacementPrompt()
@@ -255,6 +213,7 @@ void muscleFlexPrompt()
 
     tft.setFont(DroidSans_40_Bold);
     tft.setCursor(125, 175);
+    tft.setTextColor(ILI9341_GREEN);
     tft.print(flexTimer);
 
     digitalWrite(TFT_CS, HIGH);  //Disable TFT
@@ -335,17 +294,21 @@ void batteryUpdate()
 
 void brakeEngaged()
 {
-    tft.fillRect(10, 75, 200, 60, ILI9341_BLACK);
+    tft.setFont(DroidSans_40_Bold);
+    tft.setTextColor(ILI9341_MAGENTA);
+    tft.fillRect(10, 70, 300, 60, ILI9341_BLACK);
     tft.setCursor(10, 75);
-    tft.print("BRAKE ENGAGED");
+    tft.print("ENGAGED");
     delay(10);
 }
 
 void brakeReleased()
 { 
-    tft.fillRect(10, 75, 200, 60, ILI9341_BLACK);
+    tft.setFont(DroidSans_40_Bold);
+    tft.setTextColor(ILI9341_OLIVE);
+    tft.fillRect(10, 70, 300, 60, ILI9341_BLACK);
     tft.setCursor(10, 75);
-    tft.print("BRAKE RELEASED");
+    tft.print("RELEASED");
 }
 
 void runScreenInit()
@@ -354,14 +317,60 @@ void runScreenInit()
     tft.fillScreen(ILI9341_BLACK);
 }
 
-void printMuscle(int muscle)
+void printStrengthText()
 { 
-    tft.fillRect(10, 175, 200, 60, ILI9341_BLACK);
-    tft.setCursor(10, 175);
-    tft.print(muscle);
+    tft.fillRect(10, 150, 200, 40, ILI9341_BLACK);
+    tft.setCursor(10, 150);
+    tft.setFont(DroidSans_14_Bold);
+    tft.setTextColor(ILI9341_YELLOW);
+    tft.print("MUSCLE SIGNAL STRENGTH:");
 }
 
+void drawHorizontalEMGBar(int val) {
 
+  const int barY = 175;            // vertical position of the bar
+  const int barX = 10;             // left edge
+  const int maxBarWidth = 300;     // max width of bar (screen width - margin)
+  const int barHeight = 60;
+
+  int barWidth = map(val, 0, 1023, 0, maxBarWidth); // EMG to width
+
+  // Only erase the "shrinking" portion
+  if (barWidth < prevBarWidth) {
+    tft.fillRect(barX + barWidth, barY, prevBarWidth - barWidth, barHeight, ILI9341_BLACK);
+  }
+
+  // Draw new bar section (only new pixels if increasing)
+  tft.fillRect(barX, barY, barWidth, barHeight, ILI9341_YELLOW);
+
+  prevBarWidth = barWidth;
+}
+
+void batteryLowPrompt(float volt){
+    tft.fillScreen(ILI9341_BLACK);
+    tft.setFont(DroidSans_16_Bold);
+    tft.setTextColor(ILI9341_RED);
+    tft.setCursor(20, 50);
+    tft.print("WARNING: BATTERY LOW");
+    tft.setTextColor(ILI9341_YELLOW);
+    tft.setFont(DroidSans_16_Bold);
+
+    tft.setCursor(50, 100);
+    tft.print("BATTERY LEVEL: ");
+    tft.print(volt);
+    tft.print("%");
+    tft.setFont(DroidSans_12_Bold);
+    tft.setCursor(10, 120);
+    tft.print("Tap on screen if you wish to proceed");
+
+    digitalWrite(TFT_CS, HIGH);  //Disable TFT
+    digitalWrite(T_CS, LOW);     //Enable touch
+}
+
+void batteryLowAccepted()
+{
+    tft.fillScreen(ILI9341_BLACK);
+}
 /*******************************************************************************
  * PRIVATE FUNCTION IMPLEMENTATIONS                                            *
  ******************************************************************************/

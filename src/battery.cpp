@@ -3,7 +3,7 @@
  * Author: Ashton Coons
  * Brief: Myoware 2.0 muscle sensor source file for MAPBA system
  * Created on 2 19, 2025, 3:15pm
- * Modified on 2 19, 2025, 4:04pm
+ * Modified on 6 02, 2025, 10:25am
  */
 #ifndef PERIPHERAL_TEST
  /******************************************************************************
@@ -53,7 +53,6 @@
  ******************************************************************************/
 bool batteryInit()
 {
-  Serial.begin(115200);
   pinMode(BATTERY_PIN, INPUT);
   analogReadResolution(10);
   pinMode(BATTERY_TOGGLE, OUTPUT);
@@ -107,57 +106,63 @@ float getBatteryPercent(float voltage) {
 
 void updateBatteryDisplay(ILI9341_t3 &tft) {
   if (prevPercent >= 80 && prevPercent <= 100) {
+    tft.setTextColor(ILI9341_GREEN);
     tft.fillRect(10, 10, 150, 40, ILI9341_BLACK);
     tft.setCursor(10, 10);
     tft.setFont(AwesomeF200_20);
     tft.print((char)64);
 
     // Re-print only the updated percentage
-    tft.setCursor(60, 10);
+    tft.setCursor(80, 10);
     tft.setFont(DroidSans_20_Bold);
     tft.print(prevPercent);
     tft.print("%");
   }
   if (prevPercent >= 60 && prevPercent <= 79) {
+    tft.setTextColor(ILI9341_GREEN);
     tft.fillRect(10, 10, 150, 40, ILI9341_BLACK);
     tft.setCursor(10, 10);
     tft.setFont(AwesomeF200_20);
     tft.print((char)65);
 
     // Re-print only the updated percentage
-    tft.setCursor(60, 10);
+    tft.setCursor(80, 10);
     tft.setFont(DroidSans_20_Bold);
     tft.print(prevPercent);
     tft.print("%");
   }
 
   if (prevPercent >= 40 && prevPercent <= 59) {
+    tft.setTextColor(ILI9341_YELLOW);
     tft.fillRect(10, 10, 150, 40, ILI9341_BLACK);
     tft.setCursor(10, 10);
     tft.setFont(AwesomeF200_20);
     tft.print((char)66);
 
     // Re-print only the updated percentage
-    tft.setCursor(60, 10);
+    tft.setCursor(80, 10);
     tft.setFont(DroidSans_20_Bold);
     tft.print(prevPercent);
     tft.print("%");
   }
 
   if (prevPercent >= 20 && prevPercent <= 39) {
+    tft.setTextColor(ILI9341_RED);
     tft.fillRect(10, 10, 150, 40, ILI9341_BLACK);
     tft.setCursor(10, 10);
-    tft.setFont(AwesomeF200_20);
+    tft.setFont(AwesomeF200_28);
     tft.print((char)67);
 
     // Re-print only the updated percentage
-    tft.setCursor(60, 10);
-    tft.setFont(DroidSans_20_Bold);
+    tft.setCursor(80, 10);
+    tft.setFont(DroidSans_28_Bold);
     tft.print(prevPercent);
     tft.print("%");
   }
 
   if (prevPercent >= 0 && prevPercent <= 19) {
+    //critical low battery flashing
+    tft.setTextColor(ILI9341_RED);
     tft.fillRect(10, 10, 150, 40, ILI9341_BLACK);
     tft.setCursor(10, 10);
     tft.setFont(AwesomeF200_20);
