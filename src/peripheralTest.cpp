@@ -119,6 +119,14 @@
         ILI9341_t3 tft = ILI9341_t3(TFT_CS, TFT_DC, TFT_RST, TFT_MOSI, TFT_SCLK, TFT_MISO);
     #endif
 
+    #ifdef EMG_SERVO_INTEGRATION
+        Servo brakeServo;
+        int analogPinSensor = A0;
+        int servoPin = 4;
+        const int flexThreshold = 512; // flex detection
+        const int servoRestAngle = 0;  // rest
+        const int servoFlexAngle = 90; // flexed
+    #endif
  /*******************************************************************************
   * PRIVATE FUNCTIONS PROTOTYPES                                                *
   ******************************************************************************/
@@ -288,6 +296,17 @@ float getBatteryPercent(float voltage) {
             tft.setFont(AwesomeF200_20);
     
         #endif
+
+        #ifdef EMG_SERVO_INTEGRATION
+            Serial.begin(115200);
+            analogReadResolution(10);
+            pinMode(analogPinSensor,INPUT);
+
+            pinMode(servoPin, OUTPUT);
+            brakeServo.attach(servoPin);
+            brakeServo.write(servoRestAngle);
+            delay(1000);
+        #endif
     }
 
     void loop() {
@@ -385,6 +404,16 @@ float getBatteryPercent(float voltage) {
             Serial.println(percent, 1);
 
             delay(500);
+        #ifdef EMG_SERVO_INTEGRATION
+            int EMGval = analogRead(analogPinSensor);
+            
+            if (EMGval > flexThreshold) {
+                brakeServo.write(servoFlexAngle);
+            } else {
+                brakeServo.write(servoRestAngle);                
+            }
+
+                delay(10);
 
         #endif
     }
