@@ -45,6 +45,12 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 Diagram illustrating the signal path from sEMG acquisition (user's bicep) to mechanical brake activation, including power regulation.
 
 ## Software & Systems Architecture
-As the Embedded Lead, I was responsible for the full lifecycle of our control system, from hardware selection and validation to high-level firmware architecture.
-* **Component Selection**
+As the Embedded Lead, I was responsible for the full lifecycle of our control system, from hardware selection and component validation to the final hierarchical state machine (HSM).
+* **Component Selection**: Developed **Criteria Matrices** to evaluate hardware and software based on performance benchmarks:
+  * **Microcontroller**: Optimized for **clock speed, ADC resolution, PWM precision,** and **communication channels (SPI)**.
+  * **UI Display**: Evaluated **viewing angle, sunlight visibility,** and **durability** in rough terrain.
+  * **System Power**: Compared **power consumption** and **footprint** to balance battery life with a compact bike-frame form factor.
+  * **Development Enviornment **: Selected VS Code with PlatformIO to leverage **advanced library management** and **low-level hardware access**.
+*  **Modular Validation**: Developed a suite of **Peripheral Test Harnesses** to isolate and calibrate the sEMG sensor, high-torque servo, touchscreen and battery.
+  * 
 
