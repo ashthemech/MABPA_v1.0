@@ -3,6 +3,8 @@
 > Technical Roles: Embedded Lead & Mechanical Support    
 > Management Roles: Financial Lead & Team Facilitator
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
+![MABPA System Poster - Overview of muscle-activated braking system, outlining the problem, solution, key components and their function, findings, and future work.](https://github.com/user-attachments/assets/f9db0a5f-79b9-48e9-b364-f0106892d45d)
+
 
 <details>
 <summary><b>View Project Context: The Problem & Solution</b></summary>  
@@ -19,13 +21,11 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 * **Install** on standard bikes with no major modifications.
 *  **Withstand** rugged trails and high-impact riding.
 *  **Provide** reliable, intuitive control via bicep activation.
-
-
-![MABPA Diagram Full Bike ](https://github.com/user-attachments/assets/7aa08a00-928a-4d6c-974a-c01d32196962)
-**System Integration**: High-level overview of the MABPA prototype installed on a standard mountain bike, highlighting the non-invasive mounting and component layout.
-
   </details>
 
+<details>
+<summary><b>View Performance Benchmarks & Hardware Specs</b></summary>    
+ 
 ### Performance Benchmarks
 | Metric | Goal | Result |
 | :---   | :--- | :---   |
@@ -44,11 +44,25 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 * **Signal Wires**: 22AWG Shielded UL2464 - *Protects sensitive bio-signals and PWM output from interference (high SNR).*
 * **Housing**: 3D Printed PETG - *Rugged, impact-resistant enclosure designed to protect internals during high-intensity trail riding.*
 * **Bike Clamps**: Motorcycle Mounting Brackets - *Heavy-duty hardware chosen to prevent slip under the servo’s peak torque.*
+</details>
 
-## System Architecture
+<details>
+<summary><b>View System Architecture Overview</b></summary>    
+ 
+## System Architecture Overview
 <img width="1085" height="933" alt="v3 0 Final MABPA System Block Diagram drawio" src="https://github.com/user-attachments/assets/694bf787-7345-457f-87ab-35bdd5f1fca7" />
-Diagram illustrating the signal path from sEMG acquisition (user's bicep) to mechanical brake activation, including power regulation and housing.
+Diagram illustrating the signal path from sEMG acquisition (user's bicep) to mechanical brake activation, including power regulation and housing.  
 
+The MABPA architecture is divided into three integrated subsystems: Electrical (Orange), Mechanical (Green), and Embedded (Pink).
+* **Signal Acquisition**: A surface electromyography (sEMG) biosensor captures muscle activity from the user’s bicep. It outputs a filtered "envelope signal"—a smoothed representation of raw muscle contractions—directly to the microcontroller.
+* **Processing & Command**: The Teensy 4.1 Microcontroller processes this analog signal in real-time. When a "flex" is detected above the calibrated threshold, the embedded logic triggers a high-torque servo motor to engage the bike’s hand brake. When the user relaxes, the system sends a "release" command to return the servo to its resting position.
+* **User Interface & Power**: A touchscreen dashboard provides live monitoring, including battery life, a brake-force bar graph, and current braking status. The system is powered by a rechargeable 7.4V LiPo battery.
+* **Protection**: All sensitive electronics are secured within 3D-printed PETG housings (indicated by green dashed lines), providing rugged impact resistance for trail riding.
+</details>
+
+<details>
+<summary><b>View Software & Systems Architecture</b></summary>  
+ 
 ## Software & Systems Architecture
 As the Embedded Lead, I was responsible for the full lifecycle of our control system, from hardware selection and component validation to the final hierarchical state machine (HSM).
 * **Component Selection**: Developed **Criteria Matrices** to evaluate hardware and software based on performance benchmarks:
@@ -111,6 +125,8 @@ Once `INIT_SUCCESS` is received, the Top-Level HSM enters the `READY` state and 
   * **Engagement**: When filtered sEMG levels exceed the `engageBrakeThreshold`, the FSM transitions to `ENGAGE_BRAKE`, executing the `brakeServo()` function to pull the lever.
   * **Disengagement**: The system remains engaged until the muscle signal drops below the `releaseBrakeThreshold`, triggering the `releaseServo()` function and returning to the idle state.
   * **Background Monitoring**: The FSM maintains a continuous check for battery health, ensuring the rider is notified of power drops during active use.
+ 
+ </details>
 
 
 
