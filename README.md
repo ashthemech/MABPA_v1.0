@@ -4,6 +4,9 @@
 > Management Roles: Financial Lead & Team Facilitator
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 
+<details>
+<summary><b>View Project Context: The Problem & Solution</b></summary>  
+ 
 ## The Problem
 * **Limited Accessibility**: Over 85,000 Americans undergo an upper limb amputations annually (Amputee Coalition).
 * **High barrier to Entry**: Current cycling solutions require permanent brake modifications with specialized systems.
@@ -20,6 +23,8 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 
 ![MABPA Diagram Full Bike ](https://github.com/user-attachments/assets/7aa08a00-928a-4d6c-974a-c01d32196962)
 **System Integration**: High-level overview of the MABPA prototype installed on a standard mountain bike, highlighting the non-invasive mounting and component layout.
+
+  </details>
 
 ### Performance Benchmarks
 | Metric | Goal | Result |
