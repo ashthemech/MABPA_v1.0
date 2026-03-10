@@ -25,11 +25,11 @@
 
 //enum for the system state machine (initialization and error)
   enum SystemState{
-    INIITIALIZING, 
+    INIIT, 
     READY, 
     ERROR
   };
-  SystemState currentState = INIITIALIZING;
+  SystemState currentState = INIIT;
 /*******************************************************************************
  * PRIVATE VARIABLES                                                           *
  ******************************************************************************/
@@ -55,7 +55,7 @@
     //initialize the screen
     screenInit();
     //protect against statless init on cold boot
-    currentState = INIITIALIZING;
+    currentState = INIIT;
   }
 
   void loop() {
@@ -64,7 +64,7 @@
       //initializes and checks the servo, muscle sensor, and battery to ensure
       //they are functioning as expected before using the system
       //if any fail, it will brick the system
-      case INIITIALIZING:{
+      case INIIT:{
         StartupState startupResult = runStartupFSM();
         Serial.println(startupResult);
         if (startupResult == SYSTEM_READY)
@@ -92,3 +92,4 @@
   }//loop end
     
 #endif
+
