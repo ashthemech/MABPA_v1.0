@@ -1,7 +1,7 @@
 /* 
  * File:   battery.cpp
  * Author: Ashton Coons
- * Brief: Myoware 2.0 muscle sensor source file for MAPBA system
+ * Brief: Battery custom peripheral for MABPA system containing battery functions
  * Created on 2 19, 2025, 3:15pm
  * Modified on 6 02, 2025, 10:25am
  */
