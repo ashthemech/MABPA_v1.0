@@ -25,9 +25,9 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 <summary><b>View Team members & Contributors</b></summary> 
 
 ## Meet The Team
-**Ashton Coons** (Embedded Systems Lead, Financial Lead, Team Facilitator)
-**Benjamin Yang** ()
-**Neo Ajogo** () 
+**Ashton Coons** (Embedded Systems Lead, Electrical Integration, Financial Lead, Team Facilitator)
+**Benjamin Yang** (Mechanical Design Lead)
+**Neo Ajogo** (Electrical Deisgn Lead & Embedded Assist, ) 
 
 ## Mentorship & Special Thanks
 **Stephen Petersen** Faculty Advisor and Honorary "Devil's Advocate"
