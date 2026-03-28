@@ -2,7 +2,7 @@
 > **Engineering Capstone Project | University of California, Santa Cruz | Sept 2024 - June 2025**
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 ![MABPA Poster Overview v2 1 3](https://github.com/user-attachments/assets/ae0df19f-624d-4b97-afd2-eb29841f43c2)
-For a technical interrogation of the MABPA project - from initial problem identification to final testing benchmarks use the dropdowns provided below.
+For a detailed technical breakdown of the MABPA project - from initial problem identification to final testing benchmarks use the dropdowns provided below:
 
 <details>
 <summary><b>View Project Context: The Problem & Solution</b></summary>  
