@@ -3,7 +3,7 @@
 > Technical Roles: Embedded Lead & Mechanical Support    
 > Management Roles: Financial Lead & Team Facilitator
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
-![MABPA System Poster - Overview of muscle-activated braking system, outlining the problem, solution, key components and their function, findings, and future work.](https://github.com/user-attachments/assets/f9db0a5f-79b9-48e9-b364-f0106892d45d)
+[Ashton_Coons_MABPA_Overview_v2.1.3.pdf](https://github.com/user-attachments/files/26318090/Ashton_Coons_MABPA_Overview_v2.1.3.pdf)
 
 
 <details>
