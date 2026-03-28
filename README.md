@@ -50,10 +50,11 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 <summary><b>View System Architecture Overview</b></summary>    
  
 ## System Architecture Overview
-<img width="1085" height="933" alt="v3 0 Final MABPA System Block Diagram drawio" src="https://github.com/user-attachments/assets/694bf787-7345-457f-87ab-35bdd5f1fca7" />
-Diagram illustrating the signal path from sEMG acquisition (user's bicep) to mechanical brake activation, including power regulation and housing.  
+Figure 1: Level 0 System Context (As-Built) - Refined architectural overview post defense to demonstrate the highest level system overview focusing on the IPO model.
+<img width="1095" height="900" alt="v1 0 System Overview (3)" src="https://github.com/user-attachments/assets/e2d98aab-598f-4c3a-a519-d3b4d58133bb" />
+Diagram illustrating the signal path from sEMG acquisition (user's bicep) to mechanical brake activation, including power and system telemetry. 
 
-The MABPA architecture is divided into three integrated subsystems: Electrical (Orange), Mechanical (Green), and Embedded (Pink).
+The MABPA architecture is divided into three integrated subsystems: Electrical, Mechanical, and Embedded.
 * **Signal Acquisition**: A surface electromyography (sEMG) biosensor captures muscle activity from the user’s bicep. It outputs a filtered "envelope signal"—a smoothed representation of raw muscle contractions—directly to the microcontroller.
 * **Processing & Command**: The Teensy 4.1 Microcontroller processes this analog signal in real-time. When a "flex" is detected above the calibrated threshold, the embedded logic triggers a high-torque servo motor to engage the bike’s hand brake. When the user relaxes, the system sends a "release" command to return the servo to its resting position.
 * **User Interface & Power**: A touchscreen dashboard provides live monitoring, including battery life, a brake-force bar graph, and current braking status. The system is powered by a rechargeable 7.4V LiPo battery.
