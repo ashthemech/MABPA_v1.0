@@ -73,7 +73,7 @@ The MABPA architecture is divided into three integrated subsystems: Electrical, 
 </details>
 
 <details>
-<summary><b>View Software & Systems Architecture</b></summary>  
+<summary><b>View Embedded System Architecture & Control Logic</b></summary>  
  
 ## Embedded System & Control Logic
 As the Embedded Lead, I was responsible for the full lifecycle of our control system, from hardware selection and component validation to the final hierarchical state machine (HSM).
