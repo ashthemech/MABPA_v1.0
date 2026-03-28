@@ -17,7 +17,7 @@
 ## The Solution
 MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycling designed to:
 * **Integrate** seamlessly with existing prosthetics for mountain biking.
-* **Install** on standard bikes with no major modifications.
+* **Install** on standard mountain bikes with no permanent modifications.
 *  **Withstand** rugged trails and high-impact riding.
 *  **Provide** reliable, intuitive control via bicep activation.
   </details>
@@ -36,7 +36,7 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 
 ## Hardware Specifications
 * **sEMG Sensor**: Myoware 2.0 sEMG Sensor - *Non-invasive muscle signal acquisition via a secure arm band.*
-* **Microcontroller**: Teensy 4.1 - *Real-time signal processing, threshold logic, and system health checks in a compact footprint.*
+* **Microcontroller**: Teensy 4.1 - *Real-time signal processing, hysteresis logic, digital filtering, and a hierarchical state machine in a compact footprint.*
 * **Control Interface**: ILI9341 Touchscreen - *Provides real-time feedback on battery life, signal strength, and system health to ensure rider confidence.*
 * **Actuator**: SB-2290SG High-Torque Servo - *Translates signals into the mechanical force required to pull a standard brake lever.*
 * **Power**: Venom 4000 2S LiPo Battery - *High-discharge current for consistent braking and 2+ hours of active ride time.*
