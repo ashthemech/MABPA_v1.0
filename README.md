@@ -38,7 +38,7 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 <summary><b>View System Verification & Hardware Specs</b></summary>    
  
 ### System Verification Matrix
-| Metric | Goal | Result |
+| Metric | Design Goal | Measured Result |
 | :---   | :--- | :---   |
 | Footprint (Handlebar) | < 1.5" | 1.2" |
 | Installation | Allen Key (4-6)mm | Allen Key (5mm) |
@@ -75,7 +75,7 @@ The MABPA architecture is divided into three integrated subsystems: Electrical, 
 <details>
 <summary><b>View Software & Systems Architecture</b></summary>  
  
-## Software & Systems Architecture
+## Embedded System & Control Logic
 As the Embedded Lead, I was responsible for the full lifecycle of our control system, from hardware selection and component validation to the final hierarchical state machine (HSM).
 * **Component Selection**: Developed **Criteria Matrices** to evaluate hardware and software based on performance benchmarks:
   * **Microcontroller**: Optimized for **clock speed, ADC resolution, PWM precision,** and **communication channels (SPI)**.
