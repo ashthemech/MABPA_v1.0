@@ -1,7 +1,5 @@
 # MABPA - Brake with a Flex
-> **Engineering Capstone Project | University of California, Santa Cruz | 2025**    
-> Technical Roles: Embedded Lead & Mechanical Support    
-> Management Roles: Financial Lead & Team Facilitator
+> **Engineering Capstone Project | University of California, Santa Cruz | 2025**
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 ![MABPA Poster Overview v2 1 3](https://github.com/user-attachments/assets/ae0df19f-624d-4b97-afd2-eb29841f43c2)
 
@@ -21,6 +19,19 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
 *  **Withstand** rugged trails and high-impact riding.
 *  **Provide** reliable, intuitive control via bicep activation.
   </details>
+
+<details>
+<summary><b>View Team members & Contributors</b></summary> 
+
+## Meet The Team
+**Ashton Coons** (Embedded Systems Lead, Financial Lead, Team Facilitator)
+**Benjamin Yang** ()
+**Neo Ajogo** () 
+
+## Mentorship & Special Thanks
+**Stephen Petersen** Faculty Advisor and Honorary "Devil's Advocate"
+**TA/s special thanks**
+   </details>
 
 <details>
 <summary><b>View Performance Benchmarks & Hardware Specs</b></summary>    
