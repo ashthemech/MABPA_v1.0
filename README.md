@@ -2,7 +2,7 @@
 > **Engineering Capstone Project | University of California, Santa Cruz | Sept 2024 - June 2025**
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 ![MABPA Poster Overview v2 1 3](https://github.com/user-attachments/assets/ae0df19f-624d-4b97-afd2-eb29841f43c2)
-For a detailed technical breakdown of the MABPA project — from initial problem identification to final system verification — please use the dropdowns provided below:
+For a detailed technical breakdown of the MABPA project — from problem itentification to system verification — please use the dropdowns provided below:
 
 <details>
 <summary><b>View Project Context: The Problem & Solution</b></summary>  
@@ -14,7 +14,7 @@ For a detailed technical breakdown of the MABPA project — from initial problem
 * **Innovation gap**: Bio-powered advancements haven't reached adaptive sports like cycling.
 
 ## The Solution
-MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycling designed to:
+MABPA is a proof of concept "plug-and-play" bio-powered brake control for adaptive cycling designed to:
 * **Integrate** seamlessly with existing prosthetics for mountain biking.
 * **Install** on standard mountain bikes with no permanent modifications.
 *  **Withstand** rugged trails and high-impact riding.
@@ -22,12 +22,34 @@ MABPA is a prototype "plug-and-play" bio-powered brake control for adaptive cycl
   </details>
 
 <details>
-<summary><b>View Team members & Contributors</b></summary> 
+<summary><b>View Team Members & Contributors</b></summary> 
+ 
+## Project Genesis:
+The MABPA Project originated from a 10-week market analysis and literature review conducted to identify gaps in assistive technology within the mountain biking industry. Following the initial project proposal by Ashton Coons, the engineering team was formed to transition from a conceptual model to a proof-of-concept prototype.
+
+The team defined the system's functional requirements and subsystem interfaces, allowing for parallel development of the following core requirements:
+* Signal Aquisition: sEMG sensor integration and real-time digital signal aquisition & processing (DAQ/DSP).
+* Control Logic: High-speed embedded firmware & hierarchical state-machine architecture.
+* Mechanical Actuation: Custom braking attachment for mountain bike integration.
+* Power Management: Regulated power rails and battery management for safety-critical reliability.
 
 ## Meet The Team
-**Ashton Coons** (Embedded Systems Lead, Electrical Integration, Financial Lead, Team Facilitator)
-**Benjamin Yang** (Mechanical Design Lead)
-**Neo Ajogo** (Electrical Deisgn Lead & Embedded Assist, ) 
+**Ashton Coons** 
+> Embedded Systems & Subsystem Integration
+* **Embedded Control**: Authored the core real-time state machine and interrupt-driven logic.
+* **Integration**: Directed the final system integration of the electrical, mechanical, and embedded subsystems.
+* **Project Operations**: Managed the xxx budget and facilitated progress meetings & sprint cycles.
+
+**Benjamin Yang**
+> Mechanical Lead, Documentation & Product Review)
+* Mechanical Design: Conducted research into IP ratings, material research, and impact requirements (check documentation)
+*
+*
+* , material selection, servo specifications, and impact reuorements.
+* Prototyping: Developed the system housing, bike clamp selection, and initial attachment architecture.
+* Product Review: Led the documentation for mechanical stress testing.
+**Neo Ajogo**
+> (Electrical Design Lead & Embedded Assist, Progress & Communications) 
 
 ## Mentorship & Special Thanks
 **Stephen Petersen** Faculty Advisor and Honorary "Devil's Advocate"
