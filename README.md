@@ -1,4 +1,6 @@
 # MABPA - Brake with a Flex
+Note: Currently undergoing the process to digitize the documentation. Some apsects of this project have been performed "post-mortem"
+and will be labled as such. Have fun, and thanks for reading!
 > **Engineering Capstone Project | University of California, Santa Cruz | Sept 2024 - June 2025**
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 ![MABPA Poster Overview v2 1 3](https://github.com/user-attachments/assets/ae0df19f-624d-4b97-afd2-eb29841f43c2)
