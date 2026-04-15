@@ -1,8 +1,19 @@
 # MABPA - Brake with a Flex
 Project Status: This repository is currently undergoing a documentation digitization phase. Several system architectural analyses and signal chain diagrams have been produced "post-mortem" to reflect the as-built state of the hardware and formalize the underlying DSP and Control Logic. Additionally, most documentation was done in physical engineering notebooks.
 > **Engineering Capstone Project | University of California, Santa Cruz | Sept 2024 - June 2025**
+
 ### MABPA (Muscle-Activated Brake Prosthetic Attachment) uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
 ![MABPA Poster Overview v2 1 3](https://github.com/user-attachments/assets/ae0df19f-624d-4b97-afd2-eb29841f43c2)
+
+### System Performance Summary
+| Metric | Design Goal | Measured Result |
+| :---   | :--- | :---   |
+| Footprint (Handlebar) | < 1.5" | 1.2" |
+| Installation | Allen Key (4-6)mm | Allen Key (5mm) |
+| Impact Resistance | 1.63 MPa | 2.01 MPa |
+| Latency | < 200ms | 165-180ms |
+| Activation Success | > 70% | 78% |
+
 For a detailed technical breakdown of the MABPA project — from problem itentification to system verification — please use the dropdowns provided below:
 
 <details>
@@ -58,16 +69,7 @@ The team defined the system's functional requirements and subsystem interfaces, 
    </details>
 
 <details>
-<summary><b>View System Verification & Hardware Specs</b></summary>    
- 
-### System Verification Matrix
-| Metric | Design Goal | Measured Result |
-| :---   | :--- | :---   |
-| Footprint (Handlebar) | < 1.5" | 1.2" |
-| Installation | Allen Key (4-6)mm | Allen Key (5mm) |
-| Impact Resistance | 1.63 MPa | 2.01 MPa |
-| Latency | < 200ms | 165-180ms |
-| Activation Success | > 70% | 78% |
+<summary><b>View Hardware Specifications</b></summary>
 
 ## Hardware Specifications
 * **sEMG Sensor**: Myoware 2.0 sEMG Sensor - *Non-invasive muscle signal acquisition via a secure arm band.*
@@ -78,6 +80,7 @@ The team defined the system's functional requirements and subsystem interfaces, 
 * **Signal Wires**: 22AWG Shielded UL2464 - *Protects sensitive bio-signals and PWM output from interference (high SNR).*
 * **Housing**: 3D Printed PETG - *Rugged, impact-resistant enclosure designed to protect internals during high-intensity trail riding.*
 * **Bike Clamps**: Motorcycle Mounting Brackets - *Heavy-duty hardware chosen to prevent slip under the servo’s peak torque.*
+
 </details>
 
 <details>
