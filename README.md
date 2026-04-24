@@ -1,8 +1,9 @@
 # MABPA - Brake with a Flex
-The Muscle-Activated Brake Prosthetic Attachment uses bicep biosensors to control a bike’s hand brake — with just a flex of your arm.
+A myoelectric assistive device for cyclists with transradial limb loss.
+The Muscle-Activated Brake Prosthetic Attachment (MABPA) translates bicep muscle activation into deterministic brake control — enabling hand brake operation with just a flex of the arm.
 > **Engineering Capstone Project | University of California, Santa Cruz | Sept 2024 - June 2025**
 > 
-> *Documentation is actively being transferred from physical engineering notebooks to this repository.*
+> *Documentation is actively being transferred from physical engineering notebooks to this repository, including V2 design improvements and revised testing methodology.*
 
 <div align="center">
  
@@ -25,14 +26,14 @@ The Muscle-Activated Brake Prosthetic Attachment uses bicep biosensors to contro
 <summary><b>View Project Context: The Problem & Solution</b></summary>  
  
 ## The Problem
-* **Limited Accessibility**: Over 85,000 Americans undergo an upper limb amputations annually (Amputee Coalition).
+* **Limited Accessibility**: Approximately 465,000 Americans experience limb amputations annually, with upper limb cases representing 17% — alongside 43,000 born with limb differences each year ([Amputee Coalition](https://1a2c2025.com/resources/limb-loss-statistics/)).
 * **High barrier to Entry**: Current cycling solutions require permanent brake modifications with specialized systems.
 * **Safety risks**: Existing adaptations can reduce braking precision or complicate operation.
-* **Innovation gap**: Bio-powered advancements haven't reached adaptive sports like cycling.
+* **Innovation gap**: Biosignal devices haven't reached adaptive sports like cycling.
 
 ## The Solution
-MABPA is a proof of concept "plug-and-play" bio-powered brake control for adaptive cycling designed to:
-* **Integrate** seamlessly with existing prosthetics for mountain biking.
+MABPA is a proof of concept "plug-and-play" biosignal-controlled brake for adaptive cycling designed to:
+* **Integrate** seamlessly with existing upper limb prostheses used for biking.
 * **Install** on standard mountain bikes with no permanent modifications.
 *  **Withstand** rugged trails and high-impact riding.
 *  **Provide** reliable, intuitive control via bicep activation.
@@ -42,10 +43,10 @@ MABPA is a proof of concept "plug-and-play" bio-powered brake control for adapti
 <summary><b>View Team Members & Contributors</b></summary> 
  
 ## Project Genesis:
-The MABPA Project originated from a 10-week market analysis and literature review conducted to identify gaps in assistive technology within the mountain biking industry. Following the initial project proposal by Ashton Coons, the engineering team was formed to transition from a conceptual model to a proof-of-concept prototype.
+The MABPA Project originated from a 10-week market analysis and literature review conducted to identify gaps in assistive technology within the mountain biking industry. The project was proposed and initiated by Ashton Coons, with the engineering team formed following faculty approval to transition from a conceptual model to a proof-of-concept prototype.
 
 The team defined the system's functional requirements and subsystem interfaces, allowing for parallel development of the following core requirements:
-* Signal Aquisition: sEMG sensor integration and real-time digital signal aquisition & processing (DAQ/DSP).
+* Signal Acquisition: sEMG sensor integration and real-time digital signal acquisition & processing (DAQ/DSP).
 * Control Logic: High-speed embedded firmware & hierarchical state-machine architecture.
 * Mechanical Actuation: Custom braking attachment for mountain bike integration.
 * Power Management: Regulated power rails and battery management for safety-critical reliability.
