@@ -53,25 +53,32 @@ The team defined the system's functional requirements and subsystem interfaces, 
 
 ## Meet The Team
 **Ashton Coons** 
-> Embedded Systems & Subsystem Integration
-* **Embedded Control**: Authored the core real-time state machine and interrupt-driven logic.
-* **Integration**: Directed the final system integration of the electrical, mechanical, and embedded subsystems.
-* **Project Operations**: Managed the xxx budget and facilitated progress meetings & sprint cycles.
+> Embedded Design & System Integration
+* **Embedded Firmware**: Authored the core real-time state machine and interrupt-driven logic.
+* **Embedded Hardware**: Designed and soldered protoboard layout, selected embedded components (MCU, display module).
+* **Integration**: Directed system integration across electrical, mechanical, and embedded subsystems.
+* **Project Operations**: Managed the $1500 budget and facilitated progress meetings & sprint cycles.
+* **Post-Graduation Audit**: Currently transitioning documentation to digital format; V2 PCB design in progress.
 
 **Benjamin Yang**
-> Mechanical Lead, Documentation & Product Review)
-* Mechanical Design: Conducted research into IP ratings, material research, and impact requirements (check documentation)
-*
-*
-* , material selection, servo specifications, and impact reuorements.
-* Prototyping: Developed the system housing, bike clamp selection, and initial attachment architecture.
-* Product Review: Led the documentation for mechanical stress testing.
+> Mechanical Lead & Documentation
+* **Materials Research**: Researched IP ratings, material selection, and impact requirements for component housings.
+* **Actuation**: Selected and specified servo motor based on torque, speed, and form factor.
+* **Mechanical Design**: Developed the system housing and selected components for attachment architecture (bike clamps, actuation connection).
+* **Stress Testing**: Led the documentation for mechanical stress analysis and validation.
+
 **Neo Ajogo**
-> (Electrical Design Lead & Embedded Assist, Progress & Communications) 
+> Electrical Design Lead & Embedded Assist
+* **Biosignal Research**: Researched sEMG sensor placement and muscle activation sites for electrode positioning.
+* **Power Distribution**: Developed system power budget, power distribution architecture, and designed battery to MCU gauge transition cabling.
+* **Power & Sensor Specification**: Selected and specified battery, voltage regulator, quick-blow fuses, and sEMG sensor module.
+* **Signal Validation**: Collaborated on placement trials and Python signal analysis to characterize biosignal acquisition.
 
 ## Mentorship & Special Thanks
-**Stephen Petersen** Faculty Advisor and Honorary "Devil's Advocate"
-**TA/s special thanks**
+**Stephen Petersen** — Faculty Advisor and Honorary "Devil's Advocate" who challenged our design decisions at every turn.
+**Becker Sharif** — Graduate Advisor and "Physics Griller" who made sure we grasped the underlying physics.
+**Koushik Devarajan (DK)** — Graduate Advisor and "Team Grease" who kept our team accountable through weekly sprints.
+
    </details>
 
 <details>
