@@ -47,8 +47,8 @@ The MABPA Project originated from a 10-week market analysis and literature revie
 
 The team defined system functional requirements and decomposed the architecture into embedded, mechanical, and electrical domains, allowing for parallel development. These solution requirements drove the following core technical requirements:
 * **Embedded**: Real-time bio-signal acquisition & processing for deterministic brake control.
-* **Mechanical**: "Trail-proof" housings and "plug-and-play" attachments for bike integration.
-* **Electrical**: Regulated power distribution and battery management for sustained operation.
+* **Mechanical**: "Trail-proof" housings and "plug-and-play" attachments for mountain bike integration.
+* **Electrical**: Regulated power distribution, battery management, and biosignal sensing for sustained and reliable operation.
 
 ## Meet The Team
 **Ashton Coons** 
