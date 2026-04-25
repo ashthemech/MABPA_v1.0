@@ -43,7 +43,7 @@ MABPA is a proof of concept "plug-and-play" biosignal-controlled brake for adapt
 <summary><b>View Team Members & Contributors</b></summary> 
  
 ## Project Genesis:
-The MABPA Project originated from a 10-week market analysis and literature review conducted to identify gaps in assistive technology within the mountain biking industry. The project was proposed and initiated by Ashton Coons, with the engineering team formed following faculty approval to transition from a conceptual model to a proof-of-concept prototype.
+The MABPA Project originated from a 10-week market analysis and literature review conducted to identify gaps in assistive technology within the mountain biking industry. The project was proposed and initiated by Ashton Coons, with the engineering team formed following faculty approval to transition from a conceptual model to a V1 prototype.
 
 The team defined the system's functional requirements and subsystem interfaces, allowing for parallel development of the following core requirements:
 * Signal Acquisition: sEMG sensor integration and real-time digital signal acquisition & processing (DAQ/DSP).
