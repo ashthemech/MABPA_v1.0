@@ -75,7 +75,9 @@ The team defined system functional requirements and decomposed the architecture 
 
 ## Mentorship & Special Thanks
 **Stephen Petersen** — Faculty Advisor and Honorary "Devil's Advocate" who challenged our design decisions at every turn.
+
 **Becker Sharif** — Graduate Advisor and "Physics Griller" who made sure we grasped the underlying physics.
+
 **Koushik Devarajan (DK)** — Graduate Advisor and "Team Grease" who kept our team accountable through weekly sprints.
 
    </details>
