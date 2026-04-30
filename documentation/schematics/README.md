@@ -11,4 +11,4 @@ Rather than applying a single bulk capacitor, Ashton engineered a hardware-level
 
 To ensure the "noisy" return currents from the servo didn't interfere with the sensitive analog muscle data, Ashton also implemented a star-grounding point at the regulator’s ground pin by using a ground wire.
 
-**The Result:** This design stabilized the power rail, reducing a 40mV transient drop to a negligible <5mV blip, maintaining a stable reference for the control architecture during peak torque events.
+**The Result:** [This design](https://github.com/ashthemech/MABPA/blob/main/documentation/schematics/power_management_schematic_v2.0.pdf) stabilized the power rail, reducing a 40mV transient drop to a negligible <5mV blip, maintaining a stable reference for the control architecture during peak torque events.
