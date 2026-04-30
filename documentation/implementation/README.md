@@ -17,4 +17,4 @@ Bringing the Muscle Activated Braking Prosthetic Attachment (MABPA) from a bench
 * **Rugged Interconnects**:
   * Main Power Rail: XT60H connectors were used for the battery interface to provide a high-current, anti-vibrational connection capable of handling the servo inrush.
   * Logic Interface: JST MXN-2 connectors were used to interface with the protoboard for a secure mechanical lock against road vibration.
-* **Operation**: The main power switch was positioned on the side of the housing closest to the rider for rapid access, with a recessed mount to prevent accidental power-offs.
+* **Operation**: The main power switch was positioned on the side of the housing closest to the rider for rapid access.
