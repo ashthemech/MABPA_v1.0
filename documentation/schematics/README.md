@@ -2,7 +2,7 @@
 > Undergoing a transition from Fritzing to KiCad to meet professional documentation standards.
 
 ## Power Distribution
-Our initial power distribution system faced a critical challenge during the Baskin Engineering Senior Design Showcase. (link) While demonstrating the MABPA system, we observed a 5%–8% transient voltage sag triggered by the 10A inrush current of our braking servo. We diagnosed this as a lack of adequate decoupling and filtering, and with the final design defense looming, we thad to move away from a perfect "theoretical design" to high-stakes troubleshooting and quick implementation.
+Our initial [power distribution design](https://github.com/ashthemech/MABPA/blob/main/documentation/schematics/power_management_schematic_v1.0.pdf) faced a critical challenge during the Baskin Engineering Senior Design Showcase. While demonstrating the MABPA system, we observed a 5%–8% transient voltage sag triggered by the 10A inrush current of our braking servo. We diagnosed this as a lack of adequate decoupling and filtering, and with the final design defense looming, we thad to move away from a perfect "theoretical design" to high-stakes troubleshooting and quick implementation.
 
 ### The Solution: A Tiered Decoupling Network
 Rather than applying a single bulk capacitor, Ashton engineered a hardware-level fix for our protoboard implementation:
