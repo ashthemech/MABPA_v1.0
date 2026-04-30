@@ -2,7 +2,7 @@
 Bringing the Muscle Activated Braking Prosthetic Attachment (MABPA) from a bench circuit to an operable prototype required balancing high-torque mechanical demands with sensitive embedded electronics.
 
 ## Embedded Control & Housing
-* **Protoboard Implementation** : The central control unit features a hand-soldered protoboard containing the Teensy 4.1, the decoupling network, resettable fuses, and the telemetry screen.
+* **Protoboard Implementation** : The [central control unit](https://github.com/ashthemech/MABPA/blob/main/documentation/implementation/MABPA%20Protoboard%20and%20Housing%20Implementation.jpg) features a hand-soldered protoboard containing the Teensy 4.1, the decoupling network, resettable fuses, and the telemetry screen connections.
 * **Space Constraints**: The board was designed and soldered within strict mounting constraints to fit into the 3D-printed housing, mounted to a slidable sheet for easy debugging access.
 * **Vibration Mitigation**: To protect the logic from road noise, rubber stoppers were repurposed from a defunct screen to serve as improvised vibration isolators.
 
