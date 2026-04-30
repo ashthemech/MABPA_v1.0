@@ -13,7 +13,7 @@ Bringing the Muscle Activated Braking Prosthetic Attachment (MABPA) from a bench
 * **Failsafe Design**: The hook is geometrically locked under servo tension, meaning it cannot be dislodged by mechanical force during braking; it requires intentional manual removal by the rider.
 
 ## Power Management
-* **Battery Integration**: The left chassis of the housing features a removable access panel secured by screws, allowing the rider to [quickly swap the 5000mAh LiPo battery](https://github.com/ashthemech/MABPA/blob/main/documentation/implementation/MABPA%20Battery%20Slot.jpg) in the field or to recharge.
+* **Battery Integration**: The left chassis of the housing features a [removable access panel](https://github.com/ashthemech/MABPA/blob/main/documentation/implementation/MABPA%20Battery%20Slot%20Closed.jpg) secured by screws, allowing the rider to [quickly swap the 5000mAh LiPo battery](https://github.com/ashthemech/MABPA/blob/main/documentation/implementation/MABPA%20Battery%20Slot.jpg) in the field or to recharge.
 * **Rugged Interconnects**:
   * Main Power Rail: XT60H connectors were used for the battery interface to provide a high-current, anti-vibrational connection capable of handling the servo inrush.
   * Logic Interface: JST MXN-2 connectors were used to interface with the protoboard for a secure mechanical lock against road vibration.
