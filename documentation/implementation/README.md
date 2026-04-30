@@ -7,7 +7,7 @@ Bringing the Muscle Activated Braking Prosthetic Attachment (MABPA) from a bench
 * **Vibration Mitigation**: To protect the logic from road noise, rubber stoppers were repurposed from a defunct screen to serve as improvised vibration isolators.
 
 ## Mechanical Rigging & Safety
-* **High-Torque Mounting**: Standard bicycle clamps were insufficient for the high-torque activation required for emergency braking. Benjamin selected and integrated heavy-duty motorcycle clamps to ensure the servo remained stationary under load.
+* **High-Torque Mounting**: Standard bicycle clamps were insufficient for the high-torque activation required for emergency braking. Benjamin selected and integrated [heavy-duty motorcycle clamps](https://github.com/ashthemech/MABPA/blob/main/documentation/implementation/MABPA%20Underside%20Mount.jpg) to ensure the servo remained stationary under load.
 * **Serviceability**: All mounting hardware uses a standard 5mm Allen key, ensuring the system can be adjusted or serviced in the field using common cycling multi-tools.
 * **Brake Actuation**: The servo connects to the brake lever via a ball joint and "hook" interface secured by a hose clamp.
 * **Failsafe Design**: The hook is geometrically locked under servo tension, meaning it cannot be dislodged by mechanical force during braking; it requires intentional manual removal by the rider.
